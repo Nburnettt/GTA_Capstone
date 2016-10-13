@@ -1,0 +1,18 @@
+<h2>Experience</h2>
+
+<p>
+  Your experience determines your eligibility to TA certain sections.
+  Unlike section preferences, you <u>must</u> set your experience to be
+  assigned to sections. Experience includes hard skills (such as programming
+  languages) and lab experience.
+</p>
+
+<% if @experiences.empty? %>
+  <div class="well">No experience found.</div>
+<% else %>
+  <div id="skills" class="list-group">
+    <%= render @experiences %>
+  </div>
+<% end %>
+
+<%= link_to "Add experience", new_experience_path, class: "btn btn-default" %>

@@ -1,0 +1,37 @@
+<%= form_for @section_preference do |f| %>
+  <% if @section_preference.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= pluralize(@section_preference.errors.count, "error") %>
+        prohibited this section preference from being saved:
+      </h2>
+      <ul>
+        <% @section_preference.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= f.label :section_id, class: "control-label" %>
+    <%= f.select :section_id,
+      grouped_options_for_select(
+        @sections
+          .group_by { |s| s.course.department.subject_code }
+          .each { |_, ss|
+            ss.map! { |s| ["#{s.course.label} #{s.course.name} (#{s.cc_instructor_tag})", s.id] }.sort
+          }.sort),
+      {}, {class: "form-control"} %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :value, class: "control-label" %>
+    <%= f.select :value, SectionPreference.values.keys, {}, {class: "form-control"} %>
+  </div>
+
+  <div class="form-group">
+    <%= f.submit class: "btn btn-default" %>
+    <%= link_to 'Back', section_preferences_path, class: "btn btn-default" %>
+  </div>
+<% end %>

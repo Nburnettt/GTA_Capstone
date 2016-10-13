@@ -1,0 +1,9 @@
+<h2>Sections</h2>
+
+<% @sections.group_by(&:term).each do |term, sections| %>
+  <h4><%= term %></h4>
+
+  <div class="list-group">
+    <%= render sections %>
+  </div>
+<% end %>
